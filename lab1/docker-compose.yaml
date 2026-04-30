@@ -1,0 +1,32 @@
+services:
+  api-demo:
+    build:
+      context: ..
+      dockerfile: lab1/Dockerfile
+    environment:
+      POSTGRES_DB: "default"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      DB_HOST: "postgres"
+      DB_PORT: "5432"
+      SERVER_PORT: "8080"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    restart: always
+
+  postgres:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "default"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "8001:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  pgdata:
