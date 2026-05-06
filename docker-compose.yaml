@@ -3,6 +3,8 @@ services:
     build: .
     ports:
       - "8080:8080"
+    env_file:
+      - .env
     environment:
       DB_HOST: postgres
       DB_PORT: 5432
@@ -28,6 +30,7 @@ services:
 
   keydb:
     image: eqalpha/keydb:x86_64_v5.3.3
+    container_name: keydb
     ports:
       - "6379:6379"
     restart: always
