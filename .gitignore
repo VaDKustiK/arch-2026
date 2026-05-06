@@ -3,16 +3,16 @@ venv/
 __pycache__/
 *.pyc
 
-# Environment variables
+# Env
 .env
-.env.*
 
-# VS Code
+# Docker
+*.log
+
+# IDE
 .vscode/
+.idea/
 
-# OS files
+# OS
 .DS_Store
 Thumbs.db
-
-# Logs
-*.log

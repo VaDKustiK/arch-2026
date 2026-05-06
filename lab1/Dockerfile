@@ -1,7 +1,7 @@
 FROM python:3.11-slim
 WORKDIR /app
-COPY ../requirements.txt .
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-COPY lab1/app ./app
+COPY app ./app
 ENV SERVER_PORT=8080
-CMD ["python", "app/main.py"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
