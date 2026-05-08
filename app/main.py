@@ -5,6 +5,7 @@ from app.models import init_db
 import time
 from app.cache.cache_service import get_from_cache, set_to_cache, delete_from_cache
 from app.schemas import RequestCreate
+from app.rabbitmq.publisher import publish_user_created_event
 
 
 def wait_for_db():
@@ -75,7 +76,15 @@ def create_request(data: RequestCreate):
     cur.close()
     conn.close()
     delete_from_cache("all")
-    
+
+    event = {
+        "id": row[0],
+        "name": data.name,
+        "email": data.email
+    }
+
+    publish_user_created_event(event)
+
     return {
         "id": row[0],
         "created_at": str(row[1]),
