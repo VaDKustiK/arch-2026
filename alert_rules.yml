@@ -1,0 +1,30 @@
+groups:
+  - name: api-alerts
+    rules:
+
+      - alert: HighCPUUsage
+        expr: rate(process_cpu_seconds_total[1m]) > 0.8 # CPU time increasing too fast during last minute
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High CPU usage"
+          description: "CPU usage is too high"
+
+      - alert: HighUserCreationRate
+        expr: increase(users_created_total[5m]) > 5
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High user creation rate"
+          description: "More than 5 users created in 5 minutes"
+
+      - alert: SlowAPIRequests
+        expr: rate(api_request_duration_seconds_sum{method="GET"}[5m]) / rate(api_request_duration_seconds_count{method="GET"}[5m]) > 1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Slow API requests"
+          description: "Average GET API request duration is too high"

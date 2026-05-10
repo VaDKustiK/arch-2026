@@ -1,0 +1,16 @@
+global:
+  resolve_timeout: 1m
+
+route:
+  receiver: telegram-notifications
+
+receivers:
+  - name: telegram-notifications
+    telegram_configs:
+      - bot_token: "8722247106:AAGXX0aR4nBpAZiDa0K13mjl21Y68V7w5E4"
+        chat_id: 335261603
+        message: |
+          ALERT: {{ .CommonAnnotations.summary }}
+          
+          Description:
+          {{ .CommonAnnotations.description }}
