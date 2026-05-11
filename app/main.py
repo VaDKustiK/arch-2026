@@ -9,6 +9,8 @@ from app.rabbitmq.publisher import publish_user_created_event
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 from fastapi.responses import Response
 from app.metrics.metrics import users_created_total, api_request_duration_seconds
+from app.balance.init_tables import create_balance_tables
+from app.balance.router import router as balance_router
 
 
 def wait_for_db():
@@ -26,10 +28,12 @@ def wait_for_db():
 async def lifespan(app: FastAPI):
     wait_for_db()
     init_db()
+    create_balance_tables()
     yield
 
 
 app = FastAPI(lifespan=lifespan)
+app.include_router(balance_router)
 
 
 @app.get("/api/v1/get")

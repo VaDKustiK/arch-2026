@@ -5,3 +5,4 @@ python-dotenv
 redis
 pika
 prometheus-client
+SQLAlchemy
